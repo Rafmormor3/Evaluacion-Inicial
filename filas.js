@@ -55,7 +55,7 @@ crear.addEventListener('click',()=>{
 reiniciar.addEventListener('click',()=>{
 
     let filas= tabla.getElementsByTagName('tr');
-    for(let i=1; i<=filas.length-1; i++){
+    for(let i=0; i<=filas.length-1; i++){
         filas[i].remove();
     }
     lista.pop();//vaciamos la lista
