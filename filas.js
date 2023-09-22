@@ -7,10 +7,13 @@ const miercoles = document.getElementById("miercoles");
 const jueves = document.getElementById("jueves");
 const viernes = document.getElementById("viernes");
 const crear = document.getElementById('crear');
-const borrar = document.getElementById('del');
+const reiniciar = document.getElementById('del');
+const borrarFilas=document.getElementById('borrarFila')
 
 //Lista vacía para almacenar las horas que vamos poniendo en nuestro horario
 let lista = [];
+
+//------------------------------------------------------------------------------------
 
 crear.addEventListener('click',()=>{
 //creamos las filas de la tabla y se la añadimos mediante el appendChild()
@@ -24,15 +27,17 @@ crear.addEventListener('click',()=>{
             res=true;
         }
     }
-//condiciones: si están todos los input vacíos, nos salta una alarma
-//si la variable anterior es true (la hora que queremos poner esta en la lista), salta una alarma
-//si esta todo correcto ponemos las columnas en la fila creada anteriormente y se la añadimos a la tabla
-    if(hora.value=='' && lunes.value=='' && martes.value=='' && miercoles.value=='' && jueves.value=='' && viernes.value==''){
-        alert("No se puede crear una fila entera vacía.");
+//
+    let time = hora.value.split(":").join('');
+//condiciones: si están todos los input vacíos o no ponemos la hora, nos salta una alarma.
+//Si la variable anterior es true (la hora que queremos poner esta en la lista), salta una alarma.
+//Si esta todo correcto ponemos las columnas en la fila creada anteriormente y se la añadimos a la tabla
+    if(hora.value=='' || lunes.value=='' && martes.value=='' && miercoles.value=='' && jueves.value=='' && viernes.value==''){
+        alert(`No se puede crear una fila vacía.`);
     }else if(res==true){
         alert("No se puede meter una hora ya metida.");
     }else{
-        fila.insertAdjacentHTML('beforeend',`<td id="h1">${hora.value}</td>`);
+        fila.insertAdjacentHTML('beforeend',`<td class="h1">${hora.value}</td>`);
         lista.push(hora.value);
         fila.insertAdjacentHTML('beforeend',`<td>${lunes.value}</td>`);
         fila.insertAdjacentHTML('beforeend',`<td>${martes.value}</td>`);
@@ -44,15 +49,33 @@ crear.addEventListener('click',()=>{
 
 })
 
-//función para borrar filas en el horario
-del.addEventListener('click',()=>{
-    let num= tabla.getElementsByTagName('tr').length;
-//con esta condición no podemos borrar la primera fila.
-//cuando entra, borramos el último número de la lista y la fila.
-    if(num>1){
-        lista.pop();
-        tabla.getElementsByTagName('tr')[num-1].remove();
+//------------------------------------------------------------------------------------
+
+//función para reiniciar la tabla, borrando todas las filas y todas las horas de la lista
+reiniciar.addEventListener('click',()=>{
+
+    let filas= tabla.getElementsByTagName('tr');
+    for(let i=1; i<=filas.length-1; i++){
+        filas[i].remove();
     }
+    lista.pop();//vaciamos la lista
+
+})
 
 
+//------------------------------------------------------------------------------------
+
+borrarFilas.addEventListener('click',()=>{
+    //almacenamos las filas y preguntamos la fila que borraremos
+    let filas = tabla.getElementsByTagName("tr");
+    let r=parseInt(prompt("Seleccione una fila"));
+    
+    //si la fila es 0 salta alerta para que no podamos borrar los días de la semana , si no es el caso, borramos la fila de la posición
+    //que hemos escrito.
+    if(r<=0){
+        alert('Esa fila no está disponible.')
+    }else{
+        filas[r].remove();//eliminamos la fila 
+        lista[r].remove();//eliminamos la hora en la lista para poder voler a elegirla
+    }
 })
