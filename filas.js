@@ -51,19 +51,6 @@ crear.addEventListener('click',()=>{
 
 //------------------------------------------------------------------------------------
 
-//función para reiniciar la tabla, borrando todas las filas y todas las horas de la lista
-reiniciar.addEventListener('click',()=>{
-
-    let filas= tabla.getElementsByTagName('tr');
-    for(let i=0; i<=filas.length-1; i++){
-        filas[i].remove();
-    }
-    lista.pop();//vaciamos la lista
-
-})
-
-
-//------------------------------------------------------------------------------------
 
 borrarFilas.addEventListener('click',()=>{
     //almacenamos las filas y preguntamos la fila que borraremos
